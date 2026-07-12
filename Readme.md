@@ -1,3 +1,6 @@
+# Royal run
+
+
 the things will be in the project ->
 
 **player experience:**
@@ -33,8 +36,8 @@ also i changed the scene name to `MainScene` as it will only have one scene whic
 ## level generation overview 
 we are not making the **king** move from point a to be 
 but we are making the ground move from y to -x direction
-meaning we will generate the world from the y direction then when the player crosses that part we will destroy that part 
-![[Pasted image 20260711214512.png]]
+meaning we will generate the world from the y direction then when the player crosses that part we will destroy that part
+![alt text](image.png)
 
 now we are going to instantiate the ground from C# 
 we made the ground and moved the cube to the feet of the king without touching the chunk prefab to make the prefab instantiate at the center of the king 
