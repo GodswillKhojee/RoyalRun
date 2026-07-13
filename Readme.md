@@ -86,4 +86,44 @@ void Start()
 }
 ```
 
-# chunk move
+# adding and removing tiles
+
+now we for also optimizing the game 
+we will remove the tile object when it reaches the camera  and can't be seen then we will remove that tile
+but with removing it we will add another tile at front of the ground to make it look like endless running
+```cs
+else
+	{
+	    spawnPositionZ = chunks[chunks.Count - 1].transform.position.z + chunkLength;
+	}
+```
+
+```cs
+void MoveChunks()
+{
+    for (int i = 0; i < chunks.Count; i++) // we can also use foreach loop here
+    {
+        GameObject chunk = chunks[i];
+        chunk.transform.Translate(-transform.forward * (moveSpeed * Time.deltaTime));
+        // when the tiles passes the camera it should get destroyed and a new chunk should be spawn
+        if (chunk.transform.position.z <= Camera.main.transform.position.z - chunkLength)
+        {
+            chunks.Remove(chunk);
+            Destroy(chunk);
+            SpawnChunk();
+        }
+    }
+}
+```
+
+```cs
+private void SpawnChunk()
+{
+    float spawnPositionZ = CalculateSpawnPositionZ();
+
+    Vector3 chunkSpawnPos = new Vector3(transform.position.x, transform.position.y, spawnPositionZ);
+    GameObject newChunk = Instantiate(chunkPrefab, chunkSpawnPos, Quaternion.identity, chunkParent);
+
+    chunks.Add(newChunk);
+}
+```
