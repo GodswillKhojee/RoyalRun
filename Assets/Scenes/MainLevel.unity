@@ -417,10 +417,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31e397466ff0e44eb7787d39ecf5c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-  chunckPrefab: {fileID: 5301249275507444152, guid: 6c5ef67cd1b6929409113fe41173bd8f, type: 3}
+  chunkPrefab: {fileID: 5301249275507444152, guid: 6c5ef67cd1b6929409113fe41173bd8f, type: 3}
   startingChunksAmount: 12
   chunkParent: {fileID: 1352339755}
   chunkLength: 10
+  moveSpeed: 12
 --- !u!4 &752019738
 Transform:
   m_ObjectHideFlags: 0
