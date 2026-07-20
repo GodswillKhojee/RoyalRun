@@ -37,7 +37,7 @@ also i changed the scene name to `MainScene` as it will only have one scene whic
 we are not making the **king** move from point a to be 
 but we are making the ground move from y to -x direction
 meaning we will generate the world from the y direction then when the player crosses that part we will destroy that part
-![alt text](image.png)
+![alt text](images/image.png)
 
 now we are going to instantiate the ground from C# 
 we made the ground and moved the cube to the feet of the king without touching the chunk prefab to make the prefab instantiate at the center of the king 
@@ -127,3 +127,51 @@ private void SpawnChunk()
     chunks.Add(newChunk);
 }
 ```
+
+# player movement
+
+Now for the player movement
+we are only giving our playing left right and jump crouch option as this is a run endless game
+
+for to achieve this we created a input action map 
+![alt text](images/image-2.png)
+we made these changes
+and make a script which we connect it to the `player` game object
+```cs
+[SerializeField] Rigidbody playerRb;
+Vector2 movement;
+public void Move(InputAction.CallbackContext context)
+{
+    movement = context.ReadValue<Vector2>();
+    Debug.Log(movement);
+}
+```
+
+and in player added the component `input action`
+from which we selection our input action map in the `action` field and selected `invoke unity event` on behavior 
+then in `event` drop down added player map then this
+![alt text](images/image-1.png)
+
+
+now to make the player move in the world we are going to use `MovePosition`
+
+```cs
+ private void FixedUpdate()
+ {
+     HandleMovement();
+ }
+ void HandleMovement()
+ {
+     Vector3 currentPosition = rigidBody.position;
+     Vector3 movePosition = new Vector3(movement.x, 0f, movement.y);
+     Vector3 newPosition = currentPosition + movePosition * moveSpeed * Time.fixedDeltaTime;
+     rigidBody.MovePosition(newPosition);
+ }
+```
+
+we are talking tree vector3 
+one for the rigid body position
+one for the where to move the player
+and last for totaling the vectors and fixed delta time
+then
+`rigidBody.MovePosition(newPosition)`
