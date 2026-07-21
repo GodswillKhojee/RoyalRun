@@ -175,3 +175,22 @@ one for the where to move the player
 and last for totaling the vectors and fixed delta time
 then
 `rigidBody.MovePosition(newPosition)`
+
+also at first the player movement looks jittery 
+for this we turned on the `kinetic motion` in the player inspector
+then in `interpolation` -> interpolation
+
+![alt text](images/image.png)
+
+# clamping the player to x and z 
+
+for clamp reference
+https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+
+`clamp` takes three float parameter 
+```cs // inside HandleMovement
+
+ newPosition.x = Mathf.Clamp(newPosition.x, -xClamp, xClamp);
+ newPosition.z = Mathf.Clamp(newPosition.z, -zClamp, zClamp);
+
+```
