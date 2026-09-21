@@ -219,3 +219,59 @@ https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
  newPosition.z = Mathf.Clamp(newPosition.z, -zClamp, zClamp);
 
 ```
+
+
+# obstacle spawning using loops
+```cs
+public class ObjectSpawn : MonoBehaviour
+{
+    [SerializeField] GameObject objectPrefab;
+    int obstacleSpawnes= 4;
+
+    private void Start()
+    {
+        while (obstacleSpawnes > 0)
+        {
+            Instantiate(objectPrefab, transform.position, Quaternion.identity);
+            obstacleSpawnes--;
+        }
+    }
+}
+```
+
+we made a prefab of a object which is a cube 
+then we manipulated the local gravity something which made the object to move towards player
+then we instantiate the object on the location where we want to
+
+
+so the problem is now that the object is spawning at the same time
+to make object spawn at the time interval we are going to use coroutine
+
+==A coroutine is a method that can suspend execution and resume at a later time.==
+
+==**Important**: Don’t confuse coroutines with threads. Synchronous operations that run within a coroutine still execute on the main thread. If you want to reduce the amount of CPU time spent on the main thread, it’s just as important to avoid blocking operations in coroutines as in any other script code.==
+
+```cs
+IEnumerator spawnObstacleRoutine()
+{
+    while (obstacleSpawnes > 0)
+    {
+        yield return new WaitForSeconds(obstacleSpawnTIme);
+        Instantiate(objectPrefab, transform.position, Quaternion.identity);
+        obstacleSpawnes--;
+    }
+}
+```
+
+and this is called by this 
+```cs
+ private void Start()
+ {
+     StartCoroutine(spawnObstacleRoutine());
+ }
+```
+
+# physics material
+in this one we made a prefab variant in which we use a cart to behave like object moving toward player and added random rotation instead of quatornion.identity
+
+use physics material because carts was getting stuck in the road so make it move normally we used it

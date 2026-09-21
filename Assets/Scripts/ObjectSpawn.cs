@@ -1,16 +1,22 @@
 using UnityEngine;
+using System.Collections;
 
 public class ObjectSpawn : MonoBehaviour
 {
     [SerializeField] GameObject objectPrefab;
-    int obstacleSpawnes= 4;
+    [SerializeField] float obstacleSpawnTime = 1f;
 
     private void Start()
     {
-        while (obstacleSpawnes > 0)
+        StartCoroutine(spawnObstacleRoutine());
+    }
+
+    IEnumerator spawnObstacleRoutine()
+    {
+        while (true)
         {
-            Instantiate(objectPrefab, transform.position, Quaternion.identity);
-            obstacleSpawnes--;
+            yield return new WaitForSeconds(obstacleSpawnTime);
+            Instantiate(objectPrefab, transform.position, Random.rotation);
         }
     }
 }
