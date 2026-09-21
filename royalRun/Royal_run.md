@@ -1,6 +1,3 @@
-# Royal run
-
-
 the things will be in the project ->
 
 **player experience:**
@@ -36,8 +33,8 @@ also i changed the scene name to `MainScene` as it will only have one scene whic
 ## level generation overview 
 we are not making the **king** move from point a to be 
 but we are making the ground move from y to -x direction
-meaning we will generate the world from the y direction then when the player crosses that part we will destroy that part
-![alt text](images/image.png)
+meaning we will generate the world from the y direction then when the player crosses that part we will destroy that part 
+![[Pasted image 20260711214512.png]]
 
 now we are going to instantiate the ground from C# 
 we made the ground and moved the cube to the feet of the king without touching the chunk prefab to make the prefab instantiate at the center of the king 
@@ -84,6 +81,35 @@ void Start()
         Instantiate(chunckPrefab,chunkSpawnPos, Quaternion.identity, chunkParent);
     }
 }
+```
+
+# chunk movement
+
+now i am storing the instantiated chunks in an array to make it move using `transform.translate`
+
+i made array of gameobject right the side 12
+and moveSpeed for the movement of the chunk towards the -z direction
+```cs
+[SerializeField] float moveSpeed = 9f;
+GameObject[] chunks = new GameObject[12];
+```
+
+`MoveChunk() will be called every second to move the chunk toward -z direction`
+```cs
+private void Update()
+{
+    MoveChunk();
+}
+
+ void MoveChunk()
+ {
+ // making gameobject in chunks to move using transform.translate
+ // using time.deltatime to make it look same in diff framerate pc
+     foreach (var chunk in chunks)
+     {
+         chunk.transform.Translate(-transform.forward * (Time.deltaTime * moveSpeed));
+     }
+ }
 ```
 
 # adding and removing tiles
@@ -134,7 +160,7 @@ Now for the player movement
 we are only giving our playing left right and jump crouch option as this is a run endless game
 
 for to achieve this we created a input action map 
-![alt text](images/image-2.png)
+![[Pasted image 20260720145944.png]]
 we made these changes
 and make a script which we connect it to the `player` game object
 ```cs
@@ -150,7 +176,7 @@ public void Move(InputAction.CallbackContext context)
 and in player added the component `input action`
 from which we selection our input action map in the `action` field and selected `invoke unity event` on behavior 
 then in `event` drop down added player map then this
-![alt text](images/image-1.png)
+![[Pasted image 20260720150354.png]]
 
 
 now to make the player move in the world we are going to use `MovePosition`
@@ -173,14 +199,13 @@ we are talking tree vector3
 one for the rigid body position
 one for the where to move the player
 and last for totaling the vectors and fixed delta time
-then
-`rigidBody.MovePosition(newPosition)`
+then `rigidBody.MovePosition(newPosition)`
 
 also at first the player movement looks jittery 
 for this we turned on the `kinetic motion` in the player inspector
 then in `interpolation` -> interpolation
+![[Pasted image 20260720153338.png]]
 
-![alt text](images/image.png)
 
 # clamping the player to x and z 
 
