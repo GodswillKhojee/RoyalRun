@@ -275,3 +275,40 @@ and this is called by this
 in this one we made a prefab variant in which we use a cart to behave like object moving toward player and added random rotation instead of quatornion.identity
 
 use physics material because carts was getting stuck in the road so make it move normally we used it
+
+# obstacle prefab variants
+now in this we made arrays of obstacle for different type of obstacle
+```cs
+using UnityEngine;
+using System.Collections;
+
+public class ObjectSpawn : MonoBehaviour
+{
+    [SerializeField] GameObject[] objectPrefab;
+    [SerializeField] float obstacleSpawnTime = 1f;
+    [SerializeField] `Transform obstacleParent;`
+    [SerializeField] float spawnWidth = 4f;
+
+    private void Start()
+    {
+        StartCoroutine(spawnObstacleRoutine());
+    }
+
+    IEnumerator spawnObstacleRoutine()
+    {
+        while (true)
+        {
+            GameObject noOfObject = objectPrefab[Random.Range(0, objectPrefab.Length)];
+            Vector3 spawnPosition = new Vector3(Random.Range(-spawnWidth, spawnWidth), transform.position.y, transform.position.z);
+            yield return new WaitForSeconds(obstacleSpawnTime);
+            Instantiate(noOfObject, spawnPosition, Random.rotation,obstacleParent);
+        }
+    }
+}
+
+```
+
+now here we used `Transform obstaclePrefab;` this is used to make hierarchy
+now to make the object to spawn in random position we use 
+this
+`Vector3 spawnPosition = new Vector3(Random.Range(-spawnWidth, spawnWidth), transform.position.y, transform.position.z);`
