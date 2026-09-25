@@ -339,3 +339,25 @@ this is a straightforward code
 we made a lane array with three float values
 we are going to spawn fence on three places on the chunk map
 then instantiated on the map
+
+
+# remove fence
+
+```cs
+ List<int> availableLanes = new List<int> { 0, 1, 2 };
+ int fenceToSpawn = Random.Range(0, 3);
+ for (int i = 0; i < fenceToSpawn; i++)
+ {
+     if (availableLanes.Count <= 0) break;
+
+     int randomlaneIdx = Random.Range(0, availableLanes.Count);
+     int selectedLane = availableLanes[randomlaneIdx];
+     availableLanes.RemoveAt(randomlaneIdx);
+
+     Vector3 spawnPosition = new Vector3(lanes[selectedLane], transform.position.y, transform.position.z);
+     Instantiate(fencePrefab, spawnPosition, Quaternion.identity,this.transform);
+ }
+```
+now we are deciding how many fences should be spawn on the lane
+also after selecting the lane we are deleting the lane because we are making sure if the lanes is selected we do not accidently spawn fence on same lane
+

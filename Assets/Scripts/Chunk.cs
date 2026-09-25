@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Chunk : MonoBehaviour
 {
@@ -14,8 +16,18 @@ public class Chunk : MonoBehaviour
 
     void spawnFence()
     {
-        int randomlaneIdx = Random.Range(0, lanes.Length);
-        Vector3 spawnPosition = new Vector3(lanes[randomlaneIdx], transform.position.y, transform.position.z);
-        Instantiate(fencePrefab, spawnPosition, Quaternion.identity,this.transform);
+        List<int> availableLanes = new List<int> { 0, 1, 2 };
+        int fenceToSpawn = Random.Range(0, 3);
+        for (int i = 0; i < fenceToSpawn; i++)
+        {
+            if (availableLanes.Count <= 0) break;
+
+            int randomlaneIdx = Random.Range(0, availableLanes.Count);
+            int selectedLane = availableLanes[randomlaneIdx];
+            availableLanes.RemoveAt(randomlaneIdx);
+
+            Vector3 spawnPosition = new Vector3(lanes[selectedLane], transform.position.y, transform.position.z);
+            Instantiate(fencePrefab, spawnPosition, Quaternion.identity,this.transform);
+        }
     }
 }
