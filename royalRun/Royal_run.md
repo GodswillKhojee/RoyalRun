@@ -457,3 +457,13 @@ private void OnTriggerEnter(Collider other)
 }
 ```
 
+# destroy object
+now we want to delete the obstacle which are falling off the bridge 
+we made hell of a trigger collider bellow the bridge and attached the destroy script
+```cs
+ private void OnTriggerEnter(Collider other)
+ {
+     Debug.Log("destroy it: "+ other.gameObject.name);
+     Destroy(other.gameObject);
+ }
+```
