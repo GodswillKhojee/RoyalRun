@@ -424,3 +424,36 @@ spawnPosZ = 104 - (2*1) => 102
 ```
 
 this how the coin will spawn
+
+# Physics collision setup
+now in here we are setting up the collision of the items like player and pickups
+i made two script for the collision 
+one is player collision 
+second is pickups
+
+in player collision what is collided with the players
+and in pickups we check only of player is collided
+
+```cs
+// playerCollision.cs
+private void OnCollisionEnter(Collision collision)
+{
+    Debug.Log(collision.gameObject.name);
+}
+```
+
+```cs
+// pickups.cs
+
+// we are using tags for identifying the player gameObject
+const string playerString = "Player";
+
+private void OnTriggerEnter(Collider other)
+{
+    if(other.CompareTag(playerString))
+    {
+        Debug.Log("that was player");
+    }
+}
+```
+
