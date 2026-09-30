@@ -83,8 +83,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "d43e4eb655f8c221",
@@ -191,6 +190,7 @@
   },
   "active": "ef4e73ead2fae873",
   "lastOpenFiles": [
+    "ss/Pasted image 20260930234407.png",
     "ss/Pasted image 20260711214512.png",
     "Royal_run.md",
     "ss",

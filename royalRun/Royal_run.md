@@ -467,3 +467,24 @@ we made hell of a trigger collider bellow the bridge and attached the destroy sc
      Destroy(other.gameObject);
  }
 ```
+
+# player hit animation
+now we are setting up the animation for stumble when the player hits the obstacle
+
+now get animation and animator windows from windows tab
+then player animation is already set up so click on it then you will see the animation nodes on animation window and animator has some transition
+
+then we downloaded the model with animation from the [mixamo.com ](https://www.mixamo.com/#/?page=1&query=stumble) 
+then we setup the model to be compatible with our model so we made it humanoid from RIG
+
+![[Pasted image 20260930234407.png]]
+
+we also checked these so that when the stumble animation plays the player position does not changes with the animation
+
+then we separated the animation part from the modeled animation then added it on the animator part then added the transition from run to stumble and stumble to run
+
+and parameter naming it Hit (case sensitive)
+
+then added in the transition tab and added in there 
+
+now we have to trigger that in script when the player collided with the obstacle player will transition from run to stumble
