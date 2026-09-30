@@ -488,3 +488,27 @@ and parameter naming it Hit (case sensitive)
 then added in the transition tab and added in there 
 
 now we have to trigger that in script when the player collided with the obstacle player will transition from run to stumble
+
+# triggering the animation through code
+just did some easy coding
+
+```cs
+ [SerializeField] Animator animator;
+ [SerializeField] float playerCoolDown = 1f;
+
+ float coolDownTimer = 0f;
+ const string stringHit = "Hit";
+
+ void Update()
+ {
+     coolDownTimer += Time.deltaTime;
+ }
+ void OnCollisionEnter(Collision collision)
+ {
+     if (coolDownTimer < playerCoolDown) return;
+
+     animator.SetTrigger(stringHit);
+     coolDownTimer = 0f;
+     Debug.Log(collision.gameObject.name);
+ }
+```
