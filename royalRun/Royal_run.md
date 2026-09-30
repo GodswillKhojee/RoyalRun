@@ -360,4 +360,67 @@ then instantiated on the map
 ```
 now we are deciding how many fences should be spawn on the lane
 also after selecting the lane we are deleting the lane because we are making sure if the lanes is selected we do not accidently spawn fence on same lane
+ 
+# Lane pickup
+now in here we are now spawning apple and coin
 
+spawning apple was simple
+
+```cs
+void spawnApple()
+{
+    if (Random.value > appleChance ||  availableLanes.Count <= 0) return;
+    int selectedLane = SelectLane();
+
+    Vector3 spawnPosition = new Vector3(lanes[selectedLane], transform.position.y, transform.position.z);
+    Instantiate(applePrefab, spawnPosition, Quaternion.identity, this.transform);
+}
+
+int SelectLane()
+{
+    int randomlaneIdx = Random.Range(0, availableLanes.Count);
+    int selectedLane = availableLanes[randomlaneIdx];
+    availableLanes.RemoveAt(randomlaneIdx);
+    return selectedLane;
+}
+```
+
+here we are doing the same to the apple just like we did to fences
+
+now to the coin spawning
+here we need to spawn the coin based on the size of the chunk that the player is moving on
+we need to randomly spawn the coin ranging from 1 to 6
+
+so the ground or chuck size is 10 
+so that base we are calculating and dividing it by 2 to make space for coins to spawn
+
+```cs
+[SerializeField] float coinSeparationLength = 2f;
+void SpawnCoin()
+{
+    if (Random.value > coinChance || availableLanes.Count <= 0) return;
+    int selectedLane = SelectLane();
+
+    int maxCoinRange = 6;
+    int coinsToSpawn = Random.Range(1,maxCoinRange);
+
+    float topOfChunk = transform.position.z + (coinSeparationLength * 2f);
+    for(int i = 0; i < coinsToSpawn;i++)
+    {
+        float spawnPositionZ = topOfChunk - (coinSeparationLength * i);
+        Vector3 spawnPosition = new Vector3(lanes[selectedLane], transform.position.y, spawnPositionZ);
+        Instantiate(coinPrefab, spawnPosition, Quaternion.identity, this.transform);
+    }
+}
+```
+
+here we are separating the coin by 2 distance in z axis 
+lets 
+```
+transform.position.z = 100f
+then topOfChunk = 100 + (2*2) => 104
+spawnPosZ = 104 - (2*0) => 104
+spawnPosZ = 104 - (2*1) => 102
+```
+
+this how the coin will spawn
