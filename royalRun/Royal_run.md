@@ -512,3 +512,59 @@ just did some easy coding
      Debug.Log(collision.gameObject.name);
  }
 ```
+
+# inheritance
+inheritance is a concept in OOPS , that allows a class to inherit properties and methods from another class. Commonly referred to as a base or parent class.
+
+## when to use inheritance?
+- there is a phase in OOPS to " To favor the composition over inheritance".
+- inheritance -> "is a" relation
+	- e.g. a cat is a animal --- a dog is a animal
+- composition -> "has a" relation
+	- e.g. a car has a wheel --- a car has an engine
+
+
+## some keywords to know
+1. protected -> only accessible within its own class and derived class
+2. override -> replaces the base class's implementation of a method or property
+3. abstract -> declares a class or member that must be implemented in a derived class. Can not instantiate on its own.
+
+now this is the easy topic but the abstract method made my brain struggle to process that why we doing this..
+we are making two scripts class apple and coin
+those both scripts are inheriting from Pickups scripts
+```cs
+// Pickups.cs
+private void OnTriggerEnter(Collider other)
+{
+    if(other.CompareTag(playerString))
+    {
+        PickUp();
+        Destroy(gameObject);
+    }
+}
+
+protected abstract void PickUp();
+```
+
+```cs
+public class Apple : PickUps
+{
+    protected override void PickUp()
+    {
+        Debug.Log("Apple picked up!");
+    }
+
+}
+
+```
+
+```cs
+public class Coin : PickUps
+{
+    protected override void PickUp()
+    {
+        Debug.Log("Coin picked up!");
+    }
+}
+
+```
